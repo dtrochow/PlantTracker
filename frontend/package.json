@@ -1,8 +1,10 @@
 {
-  "name": "frontend",
+  "name": "planttracker-frontend",
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "description": "Plant Tracker Web User Interface",
+  "contributors": ["Vladyslav Hlushchenko", "Dominik Trochowski"],
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
