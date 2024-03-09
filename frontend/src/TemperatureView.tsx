@@ -6,7 +6,7 @@ interface TemperatureResponse {
     temperature: number;
 }
 
-const TemperatureMonitor = () => {
+const TemperatureView = () => {
     const [temperature, setTemperature] = useState<number | null>(null);
 
     const fetchTemperature = async () => {
@@ -21,10 +21,10 @@ const TemperatureMonitor = () => {
     return (
         <Flex justifyContent="center" alignItems="center" height="100vh">
             <Center flexDirection="column">
-                <Text fontSize="4xl" fontWeight="bold" mb={4}>
+                <Text fontSize="8xl" fontWeight="bold" mb={4}>
                     {temperature !== null ? `${temperature}°C` : 'Loading...'}
                 </Text>
-                <Button colorScheme="blue" onClick={fetchTemperature}>
+                <Button colorScheme="teal" size="lg" onClick={fetchTemperature}>
                     Update Temperature
                 </Button>
             </Center>
@@ -32,4 +32,4 @@ const TemperatureMonitor = () => {
     );
 };
 
-export default TemperatureMonitor;
+export default TemperatureView;
