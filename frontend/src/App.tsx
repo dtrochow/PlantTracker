@@ -1,12 +1,12 @@
 import './App.css'
-import TemperatureMonitor from './TemperatureMonitor'
+import TemperatureView from './TemperatureView'
 import TopAppBar from './TopAppBar'
 
 function App() {
   return (
     <>
       <TopAppBar appName='PlantTracker'/>
-      <TemperatureMonitor />
+      <TemperatureView />
     </>
   )
 }
