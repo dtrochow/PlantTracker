@@ -22,12 +22,13 @@ async fn main() -> std::io::Result<()> {
 
         // Serve static files only in production mode
         #[cfg(not(debug_assertions))]
-        app.service(Files::new(
+        return app.service(Files::new(
             "/", 
             std::env::var("FRONTEND_STATIC_PATH").expect("FRONTEND_STATIC_PATH environment variable wasn't found. Specify location of bundled frontend files using FRONTEND_STATIC_PATH environment variable.")
         ).index_file("index.html"));
 
-        app
+        #[cfg(debug_assertions)]
+        return app;
     })
     .bind(("127.0.0.1", 8080))?
     .run()

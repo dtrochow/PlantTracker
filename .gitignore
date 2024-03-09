@@ -15,3 +15,6 @@ Cargo.lock
 
 # Sensitive data
 .env.prod
+
+# Ignore the release package
+release-package
