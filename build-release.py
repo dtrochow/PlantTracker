@@ -9,10 +9,11 @@ FRONTEND_IMAGE_NAME = "planttracker-frontend"
 FRONTEND_PATH_INSIDE_CONTAINER = "/app/dist"
 
 def execute_command(command: list[str]) -> None:
+    """Execute given command in terminal"""
     subprocess.run(command, check=True)
 
 def build_frontend(output_path: Path) -> None:
-    """Build the app using the appropriate command."""
+    """Build the frontend using the Docker image, creating temporary container and extracting final image into provided path."""
     execute_command(["docker", "build", "-t", FRONTEND_IMAGE_NAME, "frontend"])
     # Get the container ID of the temporary container
     result = subprocess.run(["docker", "create", FRONTEND_IMAGE_NAME], check=True, text=True, capture_output=True)
@@ -21,7 +22,7 @@ def build_frontend(output_path: Path) -> None:
     execute_command(["docker", "rm", "-v", container_id])
 
 def build_backend(output_path: Path) -> None:
-    """Build the app using the appropriate command."""
+    """Build the backend using Cargo"""
     execute_command(["cargo", "build", "--release"])
     execute_command(["cp", "target/release/planttracker-backend", str(output_path)])
 
