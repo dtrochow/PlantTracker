@@ -16,6 +16,7 @@ async fn temperature() -> impl Responder {
 async fn main() -> std::io::Result<()> {
     dotenvy::from_filename(".env.dev").expect("Failed to load .env.dev file");
 
+    println!("ENV: {}", std::env::var("FRONTEND_STATIC_PATH").unwrap());
     HttpServer::new(move || {
         let app = App::new()
             .service(temperature);
