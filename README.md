@@ -4,6 +4,10 @@ PlantTracker is an application that helps you keep track of your plants. It allo
 
 ## Getting Started
 
+### Documentation
+
+[PlantTracker Documentation Link](https://planttracker.dtrochow.ovh)
+
 ### Prerequisites
 
 Before you can use PlantTracker, you'll need to have the following software installed on your machine:
