@@ -18,3 +18,7 @@ Cargo.lock
 
 # Ignore the release package
 release-package
+
+.venv
+site
+.DS_Store
