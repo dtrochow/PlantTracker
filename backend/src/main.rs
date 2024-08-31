@@ -1,6 +1,6 @@
 #[cfg(not(debug_assertions))]
 use actix_files::Files;
-use actix_web::{get, App, HttpResponse, HttpServer, Responder};
+use actix_web::{get, App, HttpResponse, HttpServer, HttpRequest, Responder};
 use rand::Rng;
 use serde_json::json;
 
@@ -12,13 +12,31 @@ async fn temperature() -> impl Responder {
     }))
 }
 
+#[get("/test")]
+async fn test_endpoint(req: HttpRequest) -> impl Responder {
+    println!("Handling request to /test endpoint");
+
+    if let Some(temperature_header) = req.headers().get("Temperature") {
+        if let Ok(temp_str) = temperature_header.to_str() {
+            println!("Received Temperature: {}", temp_str);
+        } else {
+            println!("Failed to parse Temperature header");
+        }
+    } else {
+        println!("No Temperature header found");
+    }
+
+    HttpResponse::Ok().body("This is a response from the /test endpoint")
+}
+
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
     dotenvy::from_filename(".env.dev").expect("Failed to load .env.dev file");
 
     HttpServer::new(move || {
         let app = App::new()
-            .service(temperature);
+            .service(temperature)
+            .service(test_endpoint);
 
         // Serve static files only in production mode
         #[cfg(not(debug_assertions))]
@@ -30,7 +48,7 @@ async fn main() -> std::io::Result<()> {
         #[cfg(debug_assertions)]
         return app;
     })
-    .bind(("127.0.0.1", 8080))?
+    .bind(("0.0.0.0", 8080))?
     .run()
     .await
 }
