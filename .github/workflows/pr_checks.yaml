@@ -1,0 +1,38 @@
+name: Pull Request Checks
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ] 
+  workflow_dispatch:
+
+jobs:
+  backend_checks:
+    runs-on: ubuntu-latest
+    container: rust:latest
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+
+    - name: Prepare Tools
+      run: |
+        rustup component add clippy
+        rustup component add rustfmt
+        cargo install cargo-audit
+
+    - name: Build Backend
+      run: |
+        cargo build
+
+    - name: Clippy
+      run: |
+        cargo clippy -- -D warnings
+
+    - name: Vulnerabilities Check
+      run: |
+        cargo audit
+
+    - name: Formatting Check
+      run: |
+        cargo fmt -- --check
